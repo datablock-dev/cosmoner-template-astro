@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+
+const posts = (await getCollection("posts")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+---
+
+<Base title="Astro on Cosmoner">
+  <h1>Astro on Cosmoner</h1>
+  <p>
+    A content site built to static files. Write posts in
+    <code>src/content/posts/</code> and push to publish.
+  </p>
+
+  <h2>Posts</h2>
+  <ul class="posts">
+    {
+      posts.map((post) => (
+        <li>
+          <a href={`/posts/${post.id}`}>{post.data.title}</a>
+          <time datetime={post.data.date.toISOString()}>
+            {post.data.date.toLocaleDateString("en-GB", { dateStyle: "medium" })}
+          </time>
+          <p>{post.data.description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Base>

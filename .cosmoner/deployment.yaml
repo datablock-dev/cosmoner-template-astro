@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://cosmoner.com/schemas/app.schema.json
+version: 1
+name: Astro
+
+services:
+  - name: site
+    type: static
+    build:
+      command: npm ci && npm run build
+      output_dir: dist
+    autodeploy: true
